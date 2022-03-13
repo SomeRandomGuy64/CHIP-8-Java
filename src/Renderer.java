@@ -1,4 +1,3 @@
-import javax.swing.*;
 
 public class Renderer 
 {   
@@ -15,6 +14,12 @@ public class Renderer
         //as a resolution of 64x32 is incredibly small I'll be using scale to multiply the resolution
         //set scale for now but will change to a user input later
         scale = 10;
+    }
+
+    //will toggle the pixels on and off
+    public void setPixel(int x, int y)
+    {  
+        //code for pixels to wrap around the screen
     }
 
     public int getColumns()

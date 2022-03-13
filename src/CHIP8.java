@@ -14,7 +14,7 @@ public class CHIP8 {
 
     public static void main(String[] args) 
     {
-        
+
     }
 
     public void step()
