@@ -1,8 +1,14 @@
+import java.util.ArrayList;
 
-public class Renderer 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+
+public class Renderer extends Canvas
 {   
     //creates ints for columns, rows and scale
-    private int columns, rows, scale, display[];
+    private int columns, rows, scale;
+    private GraphicsContext gc;
+    ArrayList<Integer> display = new ArrayList<>();
 
     //contructor
     public Renderer()
@@ -13,11 +19,12 @@ public class Renderer
         rows = 32;
         //as a resolution of 64x32 is incredibly small I'll be using scale to multiply the resolution
         //set scale for now but will change to a user input later
-        scale = 10;
+        scale = 20;
+        clear();
     }
 
     //will toggle the pixels on and off
-    public int setPixel(int x, int y)
+    public void setPixel(int x, int y)
     {  
         //code for pixels to wrap around the screen
         xWrapAround(x);
@@ -25,10 +32,15 @@ public class Renderer
 
         int pixelLoc = x + (y * columns);
 
-        display[pixelLoc] ^= 1;
 
-        return display[pixelLoc];
 
+    }
+
+    public void render()
+    {
+        //clears the display
+
+        //loop through the array
     }
 
     //method which wraps a pixel around the screen on the x-axis
@@ -57,6 +69,14 @@ public class Renderer
         }
     }
 
+    public void clear()
+    {
+        for (int pixel = 0; pixel < getNumberOfPixels(); pixel++)
+        {
+            display.set(pixel, 0);
+        }
+    }
+
 
 
     public int getColumns()
@@ -82,5 +102,10 @@ public class Renderer
     public int getScaledRows()
     {
         return rows*scale;
+    }
+
+    public int getNumberOfPixels()
+    {
+        return columns*rows;
     }
 }

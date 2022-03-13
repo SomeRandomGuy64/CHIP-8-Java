@@ -6,10 +6,12 @@ import javafx.scene.layout.Pane;
 public class Main extends Application {
 
     Renderer renderer;
+    CHIP8 chip8;
 
     @Override
     public void start(Stage stage) throws Exception {
         renderer = new Renderer();
+        chip8 = new CHIP8();
 
 
         stage.setTitle("CHIP-8 Emulator");
