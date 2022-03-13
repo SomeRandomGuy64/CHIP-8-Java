@@ -36,4 +36,14 @@ public class Renderer
     {
         return scale;
     }
+
+    public int getScaledColumns()
+    {
+        return columns*scale;
+    }
+
+    public int getScaledRows()
+    {
+        return rows*scale;
+    }
 }
