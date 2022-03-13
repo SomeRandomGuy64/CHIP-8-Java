@@ -20,7 +20,41 @@ public class Renderer
     public void setPixel(int x, int y)
     {  
         //code for pixels to wrap around the screen
+        xWrapAround(x);
+        yWrapAround(y);
+
+        int pixelLoc = x + (y * columns);
+
+        int display;
+
+
     }
+
+    public void xWrapAround(int x)
+    {
+        if (x > columns)
+        {
+            x -= columns;
+        }
+        else if (x < columns)
+        {
+            x += columns;
+        }
+    }
+
+    public void yWrapAround(int y)
+    {
+        if (y > rows)
+        {
+            y -= rows;
+        }
+        else if (y < rows)
+        {
+            y += rows;
+        }
+    }
+
+
 
     public int getColumns()
     {
