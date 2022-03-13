@@ -30,6 +30,7 @@ public class Renderer
 
     }
 
+    //method which wraps a pixel around the screen on the x-axis
     public void xWrapAround(int x)
     {
         if (x > columns)
@@ -42,6 +43,7 @@ public class Renderer
         }
     }
 
+    //method which wraps a pixel around the screen on the y-axis
     public void yWrapAround(int y)
     {
         if (y > rows)
