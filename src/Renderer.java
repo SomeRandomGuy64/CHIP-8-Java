@@ -2,7 +2,7 @@
 public class Renderer 
 {   
     //creates ints for columns, rows and scale
-    private int columns, rows, scale;
+    private int columns, rows, scale, display[];
 
     //contructor
     public Renderer()
@@ -17,7 +17,7 @@ public class Renderer
     }
 
     //will toggle the pixels on and off
-    public void setPixel(int x, int y)
+    public int setPixel(int x, int y)
     {  
         //code for pixels to wrap around the screen
         xWrapAround(x);
@@ -25,8 +25,9 @@ public class Renderer
 
         int pixelLoc = x + (y * columns);
 
-        int display;
+        display[pixelLoc] ^= 1;
 
+        return display[pixelLoc];
 
     }
 
@@ -37,7 +38,7 @@ public class Renderer
         {
             x -= columns;
         }
-        else if (x < columns)
+        else if (x < 0)
         {
             x += columns;
         }
@@ -50,7 +51,7 @@ public class Renderer
         {
             y -= rows;
         }
-        else if (y < rows)
+        else if (y < 0)
         {
             y += rows;
         }
