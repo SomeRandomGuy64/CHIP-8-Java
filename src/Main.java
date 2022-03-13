@@ -12,12 +12,8 @@ public class Main extends Application {
 
         stage.setTitle("CHIP-8 Emulator");
         Pane root = new Pane();
-        stage.setScene(new Scene(root, 1600, 900));
-
         renderer = new Renderer(root);
-        //renderer.render();
-        //renderer.testRender();
-
+        stage.setScene(new Scene(root, renderer.getScaledColumns(), renderer.getScaledRows()));
         stage.show();
     }
 
