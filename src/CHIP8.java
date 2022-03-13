@@ -1,7 +1,8 @@
 import java.util.Date;
-import javafx.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.scene.*;
+import javafx.scene.layout.Pane;
 
 public class CHIP8 extends Application {
 
@@ -17,9 +18,13 @@ public class CHIP8 extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // TODO Auto-generated method stub
+        renderer = new Renderer();
+
+
         stage.setTitle("CHIP-8 Emulator");
         Pane root = new Pane();
+        stage.setScene(new Scene(root, renderer.getScaledColumns(), renderer.getScaledRows()));
+        stage.show();
     }
 
     public static void main(String[] args) 
