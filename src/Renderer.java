@@ -61,7 +61,7 @@ public class Renderer
             }
             else
             {
-                gc.setFill(Color.BLACK);;
+                gc.setFill(Color.BLACK);
             }
             gc.fillRect(x, y, scale, scale);
         }
@@ -292,16 +292,6 @@ public class Renderer
     public int getRows()
     {
         return rows;
-    }
-
-    public int getColumnsArray()
-    {
-        return columns - 1;
-    }
-
-    public int getRowsArray()
-    {
-        return rows - 1;
     }
 
     public int getScale()
