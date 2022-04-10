@@ -23,7 +23,7 @@ public class Renderer
         rows = 32;
         //as a resolution of 64x32 is incredibly small I'll be using scale to multiply the resolution
         //set scale for now but will change to a user input later
-        scale = 20;
+        scale = 10;
 
         canvas = new Canvas(this.getScaledColumns(), this.getScaledRows());
         gc = canvas.getGraphicsContext2D();
