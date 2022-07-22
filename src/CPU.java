@@ -24,7 +24,7 @@ public class CPU
     public void loadSpritesIntoMemory() 
     {
 
-        int i = 0;
+        int memoryPosition = 0;
 
         long sprites[] = new long[]
         {
@@ -46,9 +46,20 @@ public class CPU
             0xF0, 0x80, 0xF0, 0x80, 0x80 //F
         };
 
-        for (i = 0; i < sprites.length; i++)
+        for (memoryPosition = 0; memoryPosition < sprites.length; memoryPosition++)
         {
-            memory[i] = sprites[i];
+            memory[memoryPosition] = sprites[memoryPosition];
+        }
+    }
+
+    public void loadProgramIntoMemory(long program[])
+    {
+
+        int loc;
+
+        for (loc = 0; loc < program.length; loc++)
+        {
+            memory[0x200 + loc] = program[loc];
         }
     }
 
