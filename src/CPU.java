@@ -1,15 +1,26 @@
 import java.util.Stack;
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
 
 public class CPU 
 {
-    private int memoryAddresses, delayTimer, soundTimer;
+    private int memoryAddresses, delayTimer, soundTimer, speed;
     private long pc, memory[], v;
     private Stack<Integer> stack = new Stack<>();
     private boolean paused;
+    //JavaFX stuff
+    private Canvas canvas;
+    private Pane root;
+    Renderer rr = new Renderer(root);
 
-    public CPU(Renderer renderer)
+    public CPU(Renderer renderer, Speaker speaker, Keyboard keyboard)
     {
+        //JavaFX stuff
+        root.getChildren().add(canvas);
+
         memoryAddresses = 0;
 
         delayTimer = 0;
@@ -19,6 +30,7 @@ public class CPU
 
         paused = false;
 
+        speed = 10;
     }
 
     public void loadSpritesIntoMemory() 
@@ -54,13 +66,30 @@ public class CPU
 
     public void loadProgramIntoMemory(long program[])
     {
-
         int loc;
 
         for (loc = 0; loc < program.length; loc++)
         {
             memory[0x200 + loc] = program[loc];
         }
+    }
+
+    public void cycle()
+    {
+        for (int i = 0; i < speed; i++)
+        {
+            if (!paused)
+            {
+
+            }
+        }
+
+        if (!paused)
+        {
+
+        }
+
+        rr.render();
     }
 
 }
