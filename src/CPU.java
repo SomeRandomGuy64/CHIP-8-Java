@@ -10,14 +10,13 @@ public class CPU
     private Stack<Integer> stack = new Stack<>();
     private boolean paused;
     //JavaFX stuff
-    private Canvas canvas;
-    private Pane root;
     Renderer renderer = new Renderer();
+    Keyboard keyboard = new Keyboard();
+    Speaker speaker = new Speaker();
 
     public CPU(Renderer renderer, Speaker speaker, Keyboard keyboard)
     {
         //JavaFX stuff
-        root.getChildren().add(canvas);
 
         memoryAddresses = 0;
 
@@ -60,6 +59,7 @@ public class CPU
         {
             memory[memoryPosition] = sprites[memoryPosition];
         }
+
     }
 
     public void loadProgramIntoMemory(long program[])

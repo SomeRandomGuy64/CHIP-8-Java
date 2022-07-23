@@ -1,4 +1,3 @@
-import java.util.Date;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,25 +8,32 @@ public class Main extends Application {
 
     Renderer renderer;
     CPU cpu;
+    Keyboard keyboard;
+    Speaker speaker;
 
     private long fps = 60, fpsInterval, startTime, now, then, elapsed, loop;
 
     @Override
     public void start(Stage stage) throws Exception {
 
+
         fpsInterval = 1000 / fps;
         then = System.currentTimeMillis();
         startTime = then;
 
-        //cpu.loadSpritesIntoMemory();
-        //cpu.loadROM('BLINKY');
-        //javascript code
-        //loop = requestAnimationFrame(step);
-
-
         stage.setTitle("CHIP-8 Emulator");
         Pane root = new Pane();
+
         renderer = new Renderer(root, 15);
+        cpu = new CPU(renderer, speaker, keyboard);
+        keyboard = new Keyboard();
+        speaker = new Speaker();
+
+        cpu.loadSpritesIntoMemory();
+        //cpu.loadROM('BLINKY');
+
+        //javascript code
+        //loop = requestAnimationFrame(step);
 
         //testing purposes, remove when not testing
         renderer.testRender();
@@ -41,6 +47,8 @@ public class Main extends Application {
     {
         launch(args);
     }  
+
+    
 
     public void step()
     {
