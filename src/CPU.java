@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class CPU 
 {
-    private int memoryAddresses, delayTimer, soundTimer, speed;
-    private long pc, memory[], v;
+    private int memoryAddresses, delayTimer, soundTimer, speed, pc;
+    private long memory[], v;
     private Stack<Integer> stack = new Stack<>();
     private boolean paused;
     //JavaFX stuff
@@ -80,16 +80,74 @@ public class CPU
         {
             if (!paused)
             {
-
+                long opcode;
+                opcode = (memory[pc] << 8 | memory[pc + 1]);
+                //executeInstruction(opcode);
             }
         }
 
         if (!paused)
         {
-
+            updateTimers();
         }
 
+        playSound();
         rr.render();
+    }
+
+    public void updateTimers()
+    {
+        if (delayTimer > 0)
+        {
+            delayTimer -= 1;
+        }
+        if (soundTimer > 0)
+        {
+            soundTimer -=1;
+        }
+    }
+
+    public void playSound()
+    {
+        if (soundTimer > 0)
+        {
+        //speaker.play(440)
+        }
+        else
+        {
+        //speaker.stop()
+        }
+    }
+
+    public void loadRom(String romName)
+    {
+        
+    }
+
+    public void executeInstruction(int opcode)
+    {
+        pc += 2;
+
+        long x = (opcode & 0x0F00) >> 8;
+
+        long y = (opcode & 0x00F0) >> 4;
+
+        switch (opcode & 0xF000) 
+        {
+            case 0x0000:
+                switch (opcode)
+                {
+                    case 0x00E0:
+                        rr.clear();
+                        break;
+                    case 0x00EE:
+                        pc = stack.pop();
+                        break;
+                }
+                break;
+            
+
+        }
     }
 
 }

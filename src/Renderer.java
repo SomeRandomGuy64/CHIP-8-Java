@@ -31,7 +31,7 @@ public class Renderer
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         root.getChildren().add(canvas);
         clear();
-        testRender();
+        //testRender();
         render();
     }
 
