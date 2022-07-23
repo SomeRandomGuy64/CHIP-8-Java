@@ -14,6 +14,10 @@ public class Renderer
     ArrayList<Integer> display = new ArrayList<>();
 
     //contructor
+
+    public Renderer() {}
+
+
     public Renderer(Pane root, int scale)
     {   
         super();

@@ -12,7 +12,7 @@ public class CPU
     //JavaFX stuff
     private Canvas canvas;
     private Pane root;
-    Renderer rr = new Renderer(root, 15);
+    Renderer renderer = new Renderer();
 
     public CPU(Renderer renderer, Speaker speaker, Keyboard keyboard)
     {
@@ -90,7 +90,7 @@ public class CPU
         }
 
         playSound();
-        rr.render();
+        renderer.render();
     }
 
     public void updateTimers()
@@ -136,7 +136,7 @@ public class CPU
                 switch (opcode)
                 {
                     case 0x00E0:
-                        rr.clear();
+                        renderer.clear();
                         break;
                     case 0x00EE:
                         pc = stack.pop();
