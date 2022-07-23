@@ -79,7 +79,7 @@ public class CPU
             if (!paused)
             {
                 long opcode = (memory.get(pc) << 8 | memory.get(pc + 1));
-                //executeInstruction(opcode);
+                executeInstruction(opcode);
             }
         }
 
@@ -121,18 +121,21 @@ public class CPU
         
     }
 
-    public void executeInstruction(int opcode)
+    public void executeInstruction(long opcode)
     {
+
+        int iOpcode = (int) opcode;
+
         pc += 2;
 
         long x = (opcode & 0x0F00) >> 8;
 
         long y = (opcode & 0x00F0) >> 4;
 
-        switch (opcode & 0xF000) 
+        switch (iOpcode & 0xF000) 
         {
             case 0x0000:
-                switch (opcode)
+                switch (iOpcode)
                 {
                     case 0x00E0:
                         renderer.clear();

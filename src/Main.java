@@ -11,7 +11,7 @@ public class Main extends Application {
     Keyboard keyboard;
     Speaker speaker;
 
-    private long fps = 60, fpsInterval, startTime, now, then, elapsed, loop;
+    private long fps = 60, fpsInterval, now, then, elapsed, loop;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -19,7 +19,6 @@ public class Main extends Application {
 
         fpsInterval = 1000 / fps;
         then = System.currentTimeMillis();
-        startTime = then;
 
         stage.setTitle("CHIP-8 Emulator");
         Pane root = new Pane();
