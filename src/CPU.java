@@ -3,8 +3,6 @@ import java.util.Stack;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-
 public class CPU 
 {
     private int memoryAddresses, delayTimer, soundTimer, speed, pc;
@@ -14,7 +12,7 @@ public class CPU
     //JavaFX stuff
     private Canvas canvas;
     private Pane root;
-    Renderer rr = new Renderer(root);
+    Renderer rr = new Renderer(root, 15);
 
     public CPU(Renderer renderer, Speaker speaker, Keyboard keyboard)
     {

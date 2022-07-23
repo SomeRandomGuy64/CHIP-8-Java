@@ -14,16 +14,18 @@ public class Renderer
     ArrayList<Integer> display = new ArrayList<>();
 
     //contructor
-    public Renderer(Pane root)
+    public Renderer(Pane root, int scale)
     {   
         super();
         //64 columns on the CHIP-8 display
         columns = 64;
         //32 rows on the CHIP-8 display
         rows = 32;
+
         //as a resolution of 64x32 is incredibly small I'll be using scale to multiply the resolution
         //set scale for now but will change to a user input later
-        scale = 10;
+        //scale = 10;
+        this.scale = scale;
 
         canvas = new Canvas(this.getScaledColumns(), this.getScaledRows());
         gc = canvas.getGraphicsContext2D();

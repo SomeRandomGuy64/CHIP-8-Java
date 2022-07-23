@@ -27,7 +27,7 @@ public class Main extends Application {
 
         stage.setTitle("CHIP-8 Emulator");
         Pane root = new Pane();
-        renderer = new Renderer(root);
+        renderer = new Renderer(root, 15);
 
         //testing purposes, remove when not testing
         renderer.testRender();
