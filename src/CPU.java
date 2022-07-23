@@ -1,12 +1,10 @@
 import java.util.Stack;
-
-import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.Pane;
-
+import java.util.ArrayList;
 public class CPU 
 {
     private int memoryAddresses, delayTimer, soundTimer, speed, pc;
-    private long memory[], v;
+    private long v;
+    private ArrayList<Long> memory = new ArrayList<>();
     private Stack<Integer> stack = new Stack<>();
     private boolean paused;
     //JavaFX stuff
@@ -35,7 +33,7 @@ public class CPU
 
         int memoryPosition = 0;
 
-        long sprites[] = new long[]
+        long[] sprites =
         {
             0xF0, 0x90, 0x90, 0x90, 0xF0, //0
             0x20, 0x60, 0x20, 0x20, 0x70, //1
@@ -57,18 +55,20 @@ public class CPU
 
         for (memoryPosition = 0; memoryPosition < sprites.length; memoryPosition++)
         {
-            memory[memoryPosition] = sprites[memoryPosition];
+            memory.add(sprites[memoryPosition]);
+            //System.out.println(sprites[memoryPosition]);
+            //System.out.println(memory.get(memoryPosition));
+            //System.out.println(memoryPosition);
         }
 
     }
 
     public void loadProgramIntoMemory(long program[])
     {
-        int loc;
-
-        for (loc = 0; loc < program.length; loc++)
+        for (int loc = 0; loc < program.length; loc++)
         {
-            memory[0x200 + loc] = program[loc];
+            //may need to change to memory.add
+            memory.set(0x200 + loc, program[loc]); //[0x200 + loc] = program[loc];
         }
     }
 
@@ -78,8 +78,7 @@ public class CPU
         {
             if (!paused)
             {
-                long opcode;
-                opcode = (memory[pc] << 8 | memory[pc + 1]);
+                long opcode = (memory.get(pc) << 8 | memory.get(pc + 1));
                 //executeInstruction(opcode);
             }
         }
