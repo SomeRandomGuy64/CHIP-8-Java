@@ -42,7 +42,7 @@ public class Renderer
     }
 
     //will toggle the pixels on and off
-    public void setPixel(int x, int y)
+    public boolean setPixel(int x, int y)
     {  
         //code for pixels to wrap around the screen
         xWrapAround(x);
@@ -51,6 +51,14 @@ public class Renderer
         int pixelLoc = x + (y * columns);
         display.set(pixelLoc, display.get(pixelLoc) ^ 1);
 
+        if (display.get(pixelLoc) == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void render()

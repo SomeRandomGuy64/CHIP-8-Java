@@ -1,10 +1,11 @@
 import java.util.Stack;
 import java.util.ArrayList;
+import java.lang.Math;
 public class CPU 
 {
     private int memoryAddresses, delayTimer, soundTimer, speed, pc;
-    private long v;
-    private ArrayList<Long> memory = new ArrayList<>();
+    private int v[];
+    private ArrayList<Integer> memory = new ArrayList<>();
     private Stack<Integer> stack = new Stack<>();
     private boolean paused;
     //JavaFX stuff
@@ -33,7 +34,7 @@ public class CPU
 
         int memoryPosition = 0;
 
-        long[] sprites =
+        int[] sprites =
         {
             0xF0, 0x90, 0x90, 0x90, 0xF0, //0
             0x20, 0x60, 0x20, 0x20, 0x70, //1
@@ -63,7 +64,7 @@ public class CPU
 
     }
 
-    public void loadProgramIntoMemory(long program[])
+    public void loadProgramIntoMemory(int program[])
     {
         for (int loc = 0; loc < program.length; loc++)
         {
@@ -128,9 +129,9 @@ public class CPU
 
         pc += 2;
 
-        long x = (opcode & 0x0F00) >> 8;
+        int x = (iOpcode & 0x0F00) >> 8;
 
-        long y = (opcode & 0x00F0) >> 4;
+        int y = (iOpcode & 0x00F0) >> 4;
 
         switch (iOpcode & 0xF000) 
         {
@@ -145,9 +146,197 @@ public class CPU
                         break;
                 }
                 break;
-            
+            case 0x1000:
+                pc = (iOpcode & 0xFFF);
+                break;
+            case 0x2000:
+                stack.push(pc);
+                pc = (iOpcode & 0xFFF);
+                break;
+            case 0x3000:
+                if (v[x] == (iOpcode & 0xFF))
+                {
+                    pc += 2;
+                }
+                break;
+            case 0x4000:
+                if (v[x] != (iOpcode & 0xFF))
+                {
+                    pc += 2;
+                }
+                break;
+            case 0x5000:
+                if (v[x] == v[y])
+                {
+                    pc += 2;
+                }
+                break;
+            case 0x6000:
+                v[x] = (iOpcode & 0xFF);
+                break;
+            case 0x7000:
+                v[x] = (iOpcode & 0xFF);
+                break;
+            case 0x8000:
+                switch (iOpcode & 0xF)
+                {
+                    case 0x0:
+                        v[x] = v[y];
+                        break;
+                    case 0x1:
+                        v[x] |= v[y];
+                        break;
+                    case 0x2:
+                        v[x] &= v[y];
+                        break;
+                    case 0x3:
+                        v[x] ^= v[y];
+                        break;
+                    case 0x4:
+                        int sum = (v[x] += v[y]);
+                        v[0xF] = 0;
 
+                        if (sum > 0xFF)
+                            {
+                                v[0xF] = 1;
+                            }
+
+                            v[x] = sum;
+                        break;
+                    case 0x5:
+                        v[0xF] = 0;
+
+                        if (v[x] > v[y])
+                        {
+                            v[0xF] = 1;
+                        }
+                        v[x] -= v[y];
+                        break;
+                    case 0x6:
+                        v[0xF] = (v[x] & 0x1);
+
+                        v[x] >>= 1;
+                        break;
+                    case 0x7:
+                        v[0xF] = 0;
+
+                        if (v[y] > v[x])
+                        {
+                            v[0xF] = 1;
+                        }
+
+                        v[x] = v[y] - v[x];
+                        break;
+                    case 0xE:
+                        v[0xF] = (v[x] & 0x80);
+                        v[x] <<= 1;
+                        break;
+                }
+
+                break;
+            case 0x9000:
+                if (v[x] != v[y])
+                {
+                    pc +=2;
+                }
+                break;
+            case 0xA000:
+                memoryAddresses = (iOpcode & 0xFFF);
+                break;
+            case 0xB000:
+                pc = (iOpcode & 0xFFF) + v[0];
+                break;
+            case 0xC000:
+                int rand = (int) (Math.random() * 0xFF);
+                v[x] = rand & (iOpcode & 0xFF);
+                break;
+            case 0xD000:
+                int width = 8;
+                int height = (iOpcode & 0xF);
+
+                v[0xF] = 0;
+
+                for (int row = 0; row < height; row++)
+                {
+                    int sprite = memory.get(memoryAddresses + row);
+
+                    for (int col = 0; col < width; col++)
+                    {
+                        if ((sprite & 0x80) > 0)
+                        {
+                            if (renderer.setPixel(v[x] + col, v[y] + row))
+                            {
+                                v[0xF] = 1;
+                            }
+                        }
+
+                        sprite <<=1;
+                    }
+                }
+                break;
+            case 0xE000:
+                switch (iOpcode & 0xFF)
+                {
+                    case 0x9E:
+                        //if (keyboard.isKeyPressed(v[x]))
+                        //{
+                        //  pc += 2;
+                        //}
+                        break;
+                    case 0xA1:
+                        //if (!keyboard.isKeyPressed(v[x]))
+                        //{
+                        //  pc += 2;
+                        //}
+                        break;
+                }
+
+                break;
+            case 0xF000:
+                switch (iOpcode & 0xFF)
+                {
+                    case 0x07:
+                        v[x] = delayTimer;
+                        break;
+                    case 0x0A:
+                        paused = true;
+                        //keyboard stuff, check js code
+                        break;
+                    case 0x15:
+                        delayTimer = v[x];
+                        break;
+                    case 0x18:
+                        soundTimer = v[x];
+                        break;
+                    case 0x1E:
+                        memoryAddresses += v[x];
+                        break;
+                    case 0x29:
+                        memoryAddresses = v[x]*5;
+                        break;
+                    case 0x33:
+                        //memory.set(memoryAddresses) = 
+                        break;
+                    case 0x55:
+                        for (int registerIndex = 0; registerIndex <= x; registerIndex++)
+                        {
+                            memory.set(memoryAddresses + registerIndex, v[registerIndex]);
+                        }
+                        break;
+                    case 0x65:
+                        for (int registerIndex = 0; registerIndex <= x; registerIndex++)
+                        {
+                            v[registerIndex] = memory.get(memoryAddresses + registerIndex);
+                        }
+                        break;
+                }
+
+                break;
+
+            default:
+                System.out.println("Unknown opcode " + iOpcode);
         }
+
     }
 
 }
